@@ -1,0 +1,22 @@
+# --- !Ups
+
+CREATE TABLE ORDERS (
+  id BIGINT(20) AUTO_INCREMENT,
+  date VARCHAR(255),
+  name VARCHAR(255),
+  age INTEGER(20),
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE ITEMS (
+  id BIGINT(20) AUTO_INCREMENT,
+  orderId BIGINT(20),
+  color VARCHAR (255),
+  size VARCHAR (255),
+  PRIMARY KEY(id)
+);
+
+# --- !Downs
+
+DROP TABLE ORDERS if EXISTS ;
+DROP TABLE ITEMS if EXISTS ;
