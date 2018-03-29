@@ -1,0 +1,8 @@
+target/
+logs/
+.idea/
+
+projects/projects/
+projects/target/
+
+/RUNNING_PID
