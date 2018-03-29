@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 
-import entities.{FullOrder, Order}
+import entities.Order
 import play.api.libs.json.Json
 import play.api.mvc._
 import repository.OrderRepository
@@ -15,7 +15,7 @@ class HomeController @Inject()(cc: ControllerComponents,
                               (implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   def index = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    Ok(views.html.order())
   }
 
   def getOrders = Action.async {
