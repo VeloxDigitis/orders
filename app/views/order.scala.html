@@ -7,11 +7,11 @@
       <form name="mainForm">
           <div class="form-group">
               <label>Imię:</label>
-              <input type="text" class="form-control" ng-model="name">
+              <input type="text" ng-disabled="items.length != 0" class="form-control" ng-model="name">
           </div>
           <div class="form-group">
               <label>Wiek:</label>
-              <input type="text" class="form-control" ng-model="age">
+              <input type="text" ng-disabled="items.length != 0" class="form-control" ng-model="age">
           </div>
 
           <hr />
@@ -33,8 +33,19 @@
               <input type="radio" ng-model="size" value="XL">XL
           </div>
 
-          <button type="button" class="btn btn-default btn-block" ng-click="addItem()">Dodaj</button>
+          <button type="button" class="btn btn-default btn-block" ng-disabled="!name || !age || !color || !size" ng-click="addItem()">Dodaj</button>
       </form>
+
+      <ul class="list-group items-view">
+          <li class="list-group-item" ng-repeat="x in items">
+              <div class="item-content">
+                  <h2>{{x.color}} bluza w rozmiarze {{x.size}}</h2>
+              </div>
+              <button type="button" class="btn btn-danger" style="float: right;" ng-click="removeItem($index)">&times;</button>
+          </li>
+      </ul>
+
+      <button type="button" class="btn btn-primary btn-block" ng-disabled="items.length == 0" ng-click="send()">Zamów</button>
 
   </div>
 
