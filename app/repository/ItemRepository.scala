@@ -2,7 +2,7 @@ package repository
 
 import javax.inject.{Inject, Singleton}
 
-import entities.{Item, Order}
+import entities.Item
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
@@ -27,8 +27,8 @@ class ItemRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, orderRe
 
   val items = TableQuery[ItemsTable]
 
-  def getOrderItems(order: Order): Future[Seq[Item]] = db.run {
-    items.filter(i => i.id === order.id).result
+  def getOrderItems(orderId: Long): Future[Seq[Item]] = db.run {
+    items.filter(i => i.id === orderId).result
   }
 
   def addItem(item: Item): Future[Item] = db.run {

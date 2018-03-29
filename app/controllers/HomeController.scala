@@ -1,34 +1,44 @@
 package controllers
 
+import java.util.Date
 import javax.inject._
 
-import entities.Order
+import entities.{FullOrder, Order}
 import play.api.libs.json.Json
 import play.api.mvc._
-import repository.OrderRepository
+import repository.{ItemRepository, OrderRepository}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents,
-                               orderRepository: OrderRepository)
+                               orderRepository: OrderRepository,
+                               itemRepository: ItemRepository)
                               (implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   def index = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.order())
   }
 
-  def getOrders = Action.async {
+  def listOrders = Action.async {
     orderRepository.findAllOrders().map(a => Ok(Json.toJson(a)))
   }
 
-  def postOrder = Action.async(parse.json) { request =>
-    request.body.validate[Order].
-      map(o => orderRepository.order(o)
-        map(a => Ok(Json.toJson(a)))).
-      getOrElse(Future {
-        BadRequest("Check your JSON")
-      })
+  def getOrder(id: Long) = Action.async {
+    itemRepository.getOrderItems(id).map(a => Ok(Json.toJson(a)))
   }
+
+  def postOrder = Action (parse.json) { request =>
+    request.body.validate[FullOrder].map(
+      fo => {
+        orderRepository.order(Order(None, new Date().toString, fo.name, fo.age)).
+          map(o => fo.items.foreach(i => itemRepository.addItem(i)))
+        Ok
+      }
+    ).recoverTotal{
+      e => BadRequest(Json.obj("status" -> "KO", "message" -> "Check your JSON"))
+    }
+  }
+
 
 }

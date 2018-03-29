@@ -1,6 +1,7 @@
 GET     /                           controllers.HomeController.index
 
-GET     /orders                     controllers.HomeController.getOrders
+GET     /orders                     controllers.HomeController.listOrders
+GET     /orders/:id                 controllers.HomeController.getOrder(id: Long)
 POST    /orders                     controllers.HomeController.postOrder
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
