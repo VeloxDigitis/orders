@@ -16,8 +16,12 @@ class HomeController @Inject()(cc: ControllerComponents,
                                itemRepository: ItemRepository)
                               (implicit ec: ExecutionContext) extends AbstractController(cc) {
 
-  def index = Action { implicit request: Request[AnyContent] =>
+  def order = Action {
     Ok(views.html.order())
+  }
+
+  def summary = Action {
+    Ok(views.html.summary())
   }
 
   def listOrders = Action.async {

@@ -1,0 +1,24 @@
+@()
+
+@main("Lista zamówień") {
+
+    <h1>Lista zamówień</h1>
+
+    <div ng-controller="summary-controller">
+        <button type="button" class="btn btn-primary btn-block" ng-click="search()">Szukaj</button>
+
+        <ul class="list-group items-view" >
+            <li ng-click="expand(o)" ng-repeat="o in orders" class="list-group-item" >
+                <h2>Zamówienie z dnia {{o.date}} - {{o.name}}</h2>
+                <ul class="list-group order-items" ng-show="o.showDetails">
+                    <li class="list-group-item" ng-repeat="x in o.items">
+                        <h2>{{x.color}} bluza w rozmiarze {{x.size}}</h2>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script src="@routes.Assets.versioned("javascripts/summary.js")" type="text/javascript"></script>
+
+}
