@@ -22,13 +22,19 @@ class ItemRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, orderRe
     def color   = column[String]("color")
     def size    = column[String]("size")
 
-    def * = (id, orderId,color, size) <> ((Item.apply _).tupled, Item.unapply)
+    def * = (id.?, orderId,color, size) <> ((Item.apply _).tupled, Item.unapply)
   }
 
   val items = TableQuery[ItemsTable]
 
   def getOrderItems(order: Order): Future[Seq[Item]] = db.run {
     items.filter(i => i.id === order.id).result
+  }
+
+  def addItem(item: Item): Future[Item] = db.run {
+    (items returning
+      items.map(_.id) into
+      ((item, id) => item.copy(id = Some(id)))) += item
   }
 
 }

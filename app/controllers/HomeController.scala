@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 
-import entities.Order
+import entities.{FullOrder, Order}
 import play.api.libs.json.Json
 import play.api.mvc._
 import repository.OrderRepository
@@ -24,7 +24,7 @@ class HomeController @Inject()(cc: ControllerComponents,
 
   def postOrder = Action.async(parse.json) { request =>
     request.body.validate[Order].
-      map(o => orderRepository.order(o).
+      map(o => orderRepository.order(o)
         map(a => Ok(Json.toJson(a)))).
       getOrElse(Future {
         BadRequest("Check your JSON")

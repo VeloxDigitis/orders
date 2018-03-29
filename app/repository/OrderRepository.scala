@@ -31,8 +31,10 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
     orders.result
   }
 
-  def order(order: Order) = db.run {
-    orders += order
+  def order(order: Order): Future[Order] = db.run {
+    (orders returning
+      orders.map(_.id) into
+      ((item, id) => item.copy(id = Some(id)))) += order
   }
 
 }
