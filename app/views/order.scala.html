@@ -11,7 +11,8 @@
           </div>
           <div class="form-group">
               <label>Wiek:</label>
-              <input type="text" ng-disabled="items.length != 0" class="form-control" ng-model="age">
+              <input name="ageInput" type="number" min="18" max="100" ng-disabled="items.length != 0" class="form-control" ng-model="age">
+              <span ng-show="mainForm.ageInput.$invalid">Proszę wprowadzić wiek z zakresu 18-100</span>
           </div>
 
           <hr />
@@ -33,7 +34,7 @@
               <input type="radio" ng-model="size" value="XL">XL
           </div>
 
-          <button type="button" class="btn btn-default btn-block" ng-disabled="!name || !age || !color || !size" ng-click="addItem()">Dodaj</button>
+          <button type="button" class="btn btn-default btn-block" ng-disabled="!name || !age || !color || !size || mainForm.ageInput.$invalid" ng-click="addItem()">Dodaj</button>
       </form>
 
       <ul class="list-group items-view">

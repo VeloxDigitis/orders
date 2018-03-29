@@ -1,4 +1,6 @@
-angular.module('orders', [])
+var app = angular.module('orders', []);
+
+app
     .controller('order-controller', function($scope, $http) {
 
         $scope.items = [];
