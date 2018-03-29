@@ -17,24 +17,21 @@ class ItemRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, orderRe
   import profile.api._
 
   class ItemsTable(tag: Tag) extends Table[Item](tag, "ITEMS") {
-    def id      = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def orderId = column[Long]("orderId")
     def color   = column[String]("color")
     def size    = column[String]("size")
 
-    def * = (id.?, orderId,color, size) <> ((Item.apply _).tupled, Item.unapply)
+    def * = (orderId,color, size) <> ((Item.apply _).tupled, Item.unapply)
   }
 
   val items = TableQuery[ItemsTable]
 
   def getOrderItems(orderId: Long): Future[Seq[Item]] = db.run {
-    items.filter(i => i.id === orderId).result
+    items.filter(i => i.orderId === orderId).result
   }
 
-  def addItem(item: Item): Future[Item] = db.run {
-    (items returning
-      items.map(_.id) into
-      ((item, id) => item.copy(id = Some(id)))) += item
+  def addItem(item: Item) = db.run {
+    items += item
   }
 
 }

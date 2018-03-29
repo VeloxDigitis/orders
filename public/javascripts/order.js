@@ -12,7 +12,7 @@ angular.module('orders', [])
         };
 
         $scope.send = function () {
-            $http.post('/orders', {date: new Date(), name: $scope.name, age: parseInt($scope.age)});
+            $http.post('/orders', {name: $scope.name, age: parseInt($scope.age), items: $scope.items});
             $scope.items = [];
             $scope.color = null;
             $scope.size = null;

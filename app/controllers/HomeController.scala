@@ -3,7 +3,7 @@ package controllers
 import java.util.Date
 import javax.inject._
 
-import entities.{FullOrder, Order}
+import entities.{FullOrder, Item, Order}
 import play.api.libs.json.Json
 import play.api.mvc._
 import repository.{ItemRepository, OrderRepository}
@@ -32,7 +32,7 @@ class HomeController @Inject()(cc: ControllerComponents,
     request.body.validate[FullOrder].map(
       fo => {
         orderRepository.order(Order(None, new Date().toString, fo.name, fo.age)).
-          map(o => fo.items.foreach(i => itemRepository.addItem(i)))
+          map(o => fo.items.foreach(i => itemRepository.addItem(Item(o.id.get, i.color, i.size))))
         Ok
       }
     ).recoverTotal{

@@ -9,11 +9,9 @@ CREATE TABLE ORDERS (
 );
 
 CREATE TABLE ITEMS (
-  id BIGINT(20) AUTO_INCREMENT,
   orderId BIGINT(20),
   color VARCHAR (255),
-  size VARCHAR (255),
-  PRIMARY KEY(id)
+  size VARCHAR (255)
 );
 
 # --- !Downs
