@@ -19,21 +19,30 @@
 
           <hr />
 
-          <div class="form-group">
-              <label>Kolor:</label>
-              <select class="form-control" ng-model="color">
-                  <option value="Czerwona" selected>Czerwony</option>
-                  <option value="Zielona">Zielony</option>
-                  <option value="Niebieska">Niebieski</option>
-              </select>
-          </div>
+          <div class="row">
+              <div class="col-6">
+                  <div class="form-group">
+                      <label>Kolor:</label>
+                      <select class="form-control" ng-model="color">
+                          <option value="Czerwona" selected>Czerwony</option>
+                          <option value="Zielona">Zielony</option>
+                          <option value="Niebieska">Niebieski</option>
+                      </select>
+                  </div>
 
-          <div class="form-group">
-              <label>Rozmiar:</label>
-              <input type="radio" ng-model="size" value="S">S
-              <input type="radio" ng-model="size" value="M">M
-              <input type="radio" ng-model="size" value="L">L
-              <input type="radio" ng-model="size" value="XL">XL
+                  <div class="form-group">
+                      <label>Rozmiar:</label>
+                      <input type="radio" ng-model="size" value="S">S
+                      <input type="radio" ng-model="size" value="M">M
+                      <input type="radio" ng-model="size" value="L">L
+                      <input type="radio" ng-model="size" value="XL">XL
+                  </div>
+              </div>
+              <div class="col-6">
+
+                  <div style="height: {{ sizepx }}px; width: {{ sizepx }}px; background-color: {{ colorpx }}"></div>
+
+              </div>
           </div>
 
           <button type="button" class="btn btn-default btn-block" ng-disabled="!name || !age || !color || !size || mainForm.ageInput.$invalid" ng-click="addItem()">Dodaj</button>
