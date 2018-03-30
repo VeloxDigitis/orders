@@ -10,7 +10,7 @@
 
         <ul class="list-group items-view" >
             <li ng-click="expand(o)" ng-repeat="o in orders" class="list-group-item" >
-                <h2>Zamówienie z dnia {{o.date}} - {{o.name}}</h2>
+                <h2>Zamówienie z {{o.date}} złożone przez {{o.name}}</h2>
                 <ul class="list-group order-items" ng-show="o.showDetails">
                     <li class="list-group-item" ng-repeat="x in o.items">
                         <h2>{{x.color}} bluza w rozmiarze {{x.size}}</h2>

@@ -16,6 +16,8 @@ class HomeController @Inject()(cc: ControllerComponents,
                                itemRepository: ItemRepository)
                               (implicit ec: ExecutionContext) extends AbstractController(cc) {
 
+  val format = new java.text.SimpleDateFormat("HH:mm dd-MM-yyyy")
+
   def order = Action {
     Ok(views.html.order())
   }
@@ -35,7 +37,7 @@ class HomeController @Inject()(cc: ControllerComponents,
   def postOrder = Action (parse.json) { request =>
     request.body.validate[FullOrder].map(
       fo => {
-        orderRepository.order(Order(None, new Date().toString, fo.name, fo.age)).
+        orderRepository.order(Order(None, format.format(new Date()), fo.name, fo.age)).
           map(o => fo.items.foreach(i => itemRepository.addItem(Item(o.id.get, i.color, i.size))))
         Ok
       }
