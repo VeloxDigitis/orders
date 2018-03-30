@@ -20,3 +20,7 @@ body {
 .item-content {
     display: inline-block;
 }
+
+.right {
+    float: right;
+}
