@@ -4,6 +4,14 @@ body {
     padding-top: 5vh;
 }
 
+@media screen and (min-width: 800px) {
+    body {
+        padding-left: 30vw;
+        padding-right: 30vw;
+    }
+
+}
+
 .items-view {
     margin-top: 2vh;
     margin-bottom: 2vh;
