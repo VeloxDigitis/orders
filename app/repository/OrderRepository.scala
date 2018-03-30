@@ -18,7 +18,7 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
 
   class OrdersTable(tag: Tag) extends Table[Order](tag, "ORDERS") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def date = column[String]("date")
+    def date = column[Long]("date")
     def name = column[String]("name")
     def age = column[Int]("age")
 
@@ -28,7 +28,7 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implic
   val orders = TableQuery[OrdersTable]
 
   def findAllOrders(): Future[Seq[Order]] = db.run {
-    orders.result
+    orders.sortBy(_.date.desc).result
   }
 
   def order(order: Order): Future[Order] = db.run {
